@@ -1,11 +1,14 @@
 import {Button, Image, Text, View} from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
+import {GlobalContext} from '../../AppState'
+import {tabCart} from '../../Common'
+
 
 export const Product = ( { route, navigation } ) => {
+    const context = useContext(GlobalContext)
+    const { item } = route.params
 
-
-    const {item} = route.params
-
+    //TODO: Styling here
     return (
         <View>
             <Text>  {item.name}  </Text>
@@ -15,19 +18,22 @@ export const Product = ( { route, navigation } ) => {
                     uri: `${item.image}`
                 }}
             />
+
+            <Button
+                title='Thêm vào danh sách yêu thích'
+                onPress={() => {
+                    //navigation.navigate('Yêu thích')
+                }}
+            />
             <Text> {item.price} </Text>
             <Button
                 title='Thêm vào giỏ hàng'
                 onPress={() => {
-                    navigation.navigate('Mua sắm')
+                    context.addToCart(item)
+                    navigation.navigate(`${tabCart}`)
                 }}
             />
-            <Button
-                title='Thêm vào danh sách yêu thích'
-                onPress={() => {
-                    navigation.navigate('Yêu thích')
-                }}
-            />
+
         </View>
     )
 }

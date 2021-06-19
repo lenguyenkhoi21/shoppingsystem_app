@@ -1,4 +1,3 @@
-import {image1, image2, image3, image4} from './DummyData'
 import {
     FlatList,
     Image,
@@ -10,38 +9,16 @@ import {
     TouchableOpacity,
     View
 } from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
+import {GlobalContext} from '../../AppState'
 
 export const Shop = ({ navigation }) => {
 
-    const DATA = [
-        {
-            id: '1',
-            name: 'Trà sữa chân châu',
-            price : 19000,
-            image : `${image1}`
-        },
-        {
-            id: '2',
-            name: 'Trà sữa truyền thống',
-            price : 29000,
-            image : `${image2}`
-        },
-        {
-            id: '3',
-            name: 'Trà đào',
-            price : 26000,
-            image : `${image3}`
-        },
-        {
-            id: '4',
-            name: 'Nước cam',
-            price : 29000,
-            image : `${image4}`
-        }
-    ]
+    const context = useContext(GlobalContext)
+    const data = context.store.products
 
-    const Item = ( {item}) => {
+    //TODO: Styling here
+    const Item = ( {item} ) => {
         return (
             <View>
                 <TouchableOpacity
@@ -50,8 +27,10 @@ export const Shop = ({ navigation }) => {
                             item : item
                         })
                     }}
+                    key={item.id}
                 >
                     <Text>  {item.name}  </Text>
+
                     <Image
                         style={{ height : 200, width : 200 }}
                         source={{
@@ -64,16 +43,10 @@ export const Shop = ({ navigation }) => {
         )
     }
 
+    //TODO: Styling here
     return (
         <View style={{flex : 1}}>
             <View style={{flex : 1}}>
-                {/*<TouchableOpacity*/}
-                {/*    onPress={() => {*/}
-                {/*        navigation.navigate('Tìm kiếm')*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    */}
-                {/*</TouchableOpacity>*/}
                 <Pressable onPress={() => {
                     navigation.navigate('Tìm kiếm')
                 }}>
@@ -84,20 +57,16 @@ export const Shop = ({ navigation }) => {
                         placeholder='Tìm kiếm ...'
                     />
                 </Pressable>
-
-
-
             </View>
 
             <View style={{flex : 9}}>
                 <SafeAreaView>
                     <ScrollView>
                         <FlatList
-                            data={DATA}
+                            data={data}
                             renderItem={Item}
                             keyExtractor={item => item.id}
                         />
-
                     </ScrollView>
                 </SafeAreaView>
             </View>

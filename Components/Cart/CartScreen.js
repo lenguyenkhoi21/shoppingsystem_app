@@ -1,5 +1,4 @@
 import React from 'react'
-import {View} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {Cart} from './Cart'
 import {Payment} from './Payment'

@@ -1,40 +1,76 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {HomeScreen} from './Components/Home/HomeScreen'
-import {Image, View} from 'react-native'
+import {Image, Text, View} from 'react-native'
 import {FavoriteScreen} from './Components/Favorite/FavoriteScreen'
 import {CartScreen} from './Components/Cart/CartScreen'
 import {UserScreen} from './Components/User/UserScreen'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {AppState, Store} from './Store'
 import {AuthenticationScreen} from './Components/Authentication/AuthenticationScreen'
 import {style} from './AppStyle'
 import {tabCart, tabFavorite, tabHome, tabUser} from './Common'
+import {AppState, GlobalContext} from './AppState'
+import {image1, image2, image3, image4} from './DummyData'
 
 const Tab = createBottomTabNavigator()
 
 const MainScreen = () => {
-    const app = useContext(Store)
+    const context = useContext(GlobalContext)
+
+    //TODO Fetch API From Here
+    useEffect(() => {
+        context.fetchData([
+            {
+                id: '1',
+                name: 'Trà sữa chân châu',
+                price: 19000,
+                image: `${image1}`
+            },
+            {
+                id: '2',
+                name: 'Trà sữa truyền thống',
+                price: 29000,
+                image: `${image2}`
+            },
+            {
+                id: '3',
+                name: 'Trà đào',
+                price: 26000,
+                image: `${image3}`
+            },
+            {
+                id: '4',
+                name: 'Nước cam',
+                price: 29000,
+                image: `${image4}`
+            }
+        ])
+
+        return () => {
+
+        }
+    }, [])
+
 
     return (
         <Tab.Navigator
             initialRouteName={tabHome}
             tabBarOptions={{
-                showLabel : false,
-                style : style.container
+                showLabel: false,
+                style: style.container
             }}
         >
             <Tab.Screen
                 name={tabHome}
                 component={HomeScreen}
                 options={{
-                    tabBarIcon : ({focused}) => (
+                    tabBarIcon: ({focused}) => (
                         <View>
                             <Image
                                 source={require('./assets/home.png')}
                                 style={{
-                                    height : 25,
-                                    width : 25,
+                                    height: 25,
+                                    width: 25,
                                     tintColor: focused ? '#FA4A0C' : '#000000'
                                 }}
                             />
@@ -47,13 +83,13 @@ const MainScreen = () => {
             <Tab.Screen
                 name={tabFavorite}
                 options={{
-                    tabBarIcon : ({focused}) => (
+                    tabBarIcon: ({focused}) => (
                         <View>
                             <Image
                                 source={require('./assets/heart.png')}
                                 style={{
-                                    height : 25,
-                                    width : 25,
+                                    height: 25,
+                                    width: 25,
                                     tintColor: focused ? '#FA4A0C' : '#000000'
                                 }}
                             />
@@ -62,7 +98,7 @@ const MainScreen = () => {
                 }}
             >
                 {() => (
-                    app.user===null ? <AuthenticationScreen /> :  <FavoriteScreen />
+                    context.store.user.phone === null ? <AuthenticationScreen/> : <FavoriteScreen/>
                 )}
             </Tab.Screen>
 
@@ -70,13 +106,39 @@ const MainScreen = () => {
             <Tab.Screen
                 name={tabCart}
                 options={{
-                    tabBarIcon : ({focused}) => (
+                    tabBarIcon: ({focused}) => (
                         <View>
                             <Image
                                 source={require('./assets/cart.png')}
                                 style={{
-                                    height : 25,
-                                    width : 25,
+                                    height: 25,
+                                    width: 25,
+                                    tintColor: focused ? '#FA4A0C' : '#000000'
+                                }}
+                            />
+                            {
+                                context.store.totalItem > 0 ? <Text > {context.store.totalItem} </Text> : <Text> </Text>
+                            }
+                        </View>
+                    )
+                }}
+            >
+                {() => (
+                    context.store.user.phone === null ? <AuthenticationScreen/> : <CartScreen/>
+                )}
+            </Tab.Screen>
+
+
+            <Tab.Screen
+                name={tabUser}
+                options={{
+                    tabBarIcon: ({focused}) => (
+                        <View>
+                            <Image
+                                source={require('./assets/user.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
                                     tintColor: focused ? '#FA4A0C' : '#000000'
                                 }}
                             />
@@ -85,30 +147,7 @@ const MainScreen = () => {
                 }}
             >
                 {() => (
-                    app.user===null ? <AuthenticationScreen /> :  <CartScreen />
-                )}
-            </Tab.Screen>
-
-
-            <Tab.Screen
-                name={tabUser}
-                options={{
-                    tabBarIcon : ({focused}) => (
-                        <View>
-                            <Image
-                                source={require('./assets/user.png')}
-                                style={{
-                                    height : 25,
-                                    width : 25,
-                                    tintColor: focused ? '#FA4A0C' : '#000000'
-                                }}
-                            />
-                        </View>
-                    )
-                }}
-            >
-                {()=> (
-                    app.user===null ? <AuthenticationScreen /> :  <UserScreen />
+                    context.store.user.phone === null ? <AuthenticationScreen/> : <UserScreen/>
                 )}
             </Tab.Screen>
         </Tab.Navigator>
@@ -116,16 +155,13 @@ const MainScreen = () => {
 }
 
 const App = () => {
-    const app = AppState()
-
     return (
         <NavigationContainer>
-            <Store.Provider value={app}>
+            <AppState>
                 <MainScreen />
-            </Store.Provider>
+            </AppState>
         </NavigationContainer>
     )
 }
-
 
 export default App

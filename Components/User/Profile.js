@@ -1,37 +1,44 @@
 import React, {useContext} from 'react'
 import {Button, View} from 'react-native'
-import {Store} from '../../Store'
+import {srcAccount, srcHistory, srcSetting, tabHome} from '../../Common'
+import {GlobalContext} from '../../AppState'
 
 export const Profile = ({ navigation }) => {
-    const app = useContext(Store)
 
+    const context = useContext(GlobalContext)
+
+    //TODO: Styling here
     return (
         <View>
             <Button
                 title='Tài khoản'
-                onPress= {() => {
-                    navigation.navigate('Tài khoản')
+                onPress = {() => {
+                    navigation.navigate(`${srcAccount}`)
                 }}
             />
 
             <Button
                 title='Lịch sử mua hàng'
                 onPress= {() => {
-                    navigation.navigate('Lịch sử mua hàng')
+                    navigation.navigate(`${srcHistory}`)
                 }}
             />
 
             <Button
                 title='Cài đặt'
                 onPress= {() => {
-                    navigation.navigate('Cài đặt')
+                    navigation.navigate(`${srcSetting}`)
                 }}
             />
 
             <Button
                 title='Đăng xuất'
                 onPress= {() => {
-                    app.logout()
+                    const navigate = () => {
+                        navigation.navigate(`${tabHome}`)
+                    }
+
+                    context.logout(navigate)
                 }}
             />
         </View>

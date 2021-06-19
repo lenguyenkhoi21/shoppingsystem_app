@@ -1,9 +1,9 @@
 import React from 'react'
 import {View} from 'react-native'
 
-export const Setting = () => {
+export const Detail = () => {
 
-    //TODO: Template if need, will upgrade later
+    //TODO: Styling here, This is only show
     return (
         <View>
 
