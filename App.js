@@ -151,6 +151,8 @@ const MainScreen = () => {
                 )}
             </Tab.Screen>
         </Tab.Navigator>
+
+        ///Hello, this phan man minh hang
     )
 }
 
