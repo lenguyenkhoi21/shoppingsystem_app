@@ -73,10 +73,10 @@ export const Signup = ({ navigation }) => {
                         account.password.length > 0 &&
                         account.password === account.verifiedPassword
                     ) {
-                        //TODO: Fetch API Signup Here
+                        //TODO: Fetch API Signup Here - Method: POST (Payload require) - /api/signup
                         axios.post('', account)
                             .then(value => {
-                                //TODO: Fetch API Login Here
+                                //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
                                 if (value.data.message === 'Success') {
                                     const payload = {
                                         phone : account.phone,

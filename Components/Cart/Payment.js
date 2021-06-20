@@ -10,7 +10,7 @@ export const Payment = ({ navigation }) => {
             <Button
                 title='Xác nhận'
                 onPress= {() => {
-                    //TODO: POST API cart here
+                    //TODO: POST API cart here - Method: POST (Payload require)  - /api/payment
 
                     navigation.navigate(`${srcSuccess}`)
                 }}

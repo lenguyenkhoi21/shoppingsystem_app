@@ -37,8 +37,8 @@ export const Login = ({ navigation }) => {
             <Button
                 title='Đăng nhập'
                 onPress={()=>{
-                    //TODO: Fetch API Login Here
-                    axios.post('http://192.168.1.9:3001/auth', account)
+                    //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
+                    axios.post(``, account)
                         .then(value => {
                             if (value.data.message==='Success') {
                                 setFail(false)

@@ -4,7 +4,7 @@ import {srcDetail} from '../../Common'
 
 export const History = ({ navigation }) => {
 
-    //TODO: Fetch API From Database to show history
+    //TODO: Fetch API From Database to show history - Method : GET - /api/history/:phone
     useEffect(() => {
         return () => {
 

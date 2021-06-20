@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator()
 const MainScreen = () => {
     const context = useContext(GlobalContext)
 
-    //TODO Fetch API From Here
+    //TODO Fetch API From Here - Method GET - /api/fetch
     useEffect(() => {
         context.fetchData([
             {
@@ -51,7 +51,7 @@ const MainScreen = () => {
         }
     }, [])
 
-
+    //TODO: Styling here if need
     return (
         <Tab.Navigator
             initialRouteName={tabHome}
