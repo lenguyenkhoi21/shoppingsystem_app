@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react'
-import {Button, TextInput, View} from 'react-native'
+import {Button, Text, TextInput, View} from 'react-native'
 import {srcLogin, srcSignup, tabHome} from '../../Common'
 import axios from 'axios'
 import {GlobalContext} from '../../AppState'
+import {API_BASE} from "../../App.config";
 
 export const Signup = ({ navigation }) => {
     const context = useContext(GlobalContext)
@@ -66,15 +67,22 @@ export const Signup = ({ navigation }) => {
             <Button
                 title='Đăng ký'
                 onPress={()=>{
-
                     if (account.phone.length===10 &&
                         account.email.length > 0 &&
                         account.name.length > 0 &&
                         account.password.length > 0 &&
                         account.password === account.verifiedPassword
                     ) {
+                        const information = {
+                            phone: account.phone,
+                            password: account.password,
+                            email: account.email,
+                            name: account.name
+                        }
+
+
                         //TODO: Fetch API Signup Here - Method: POST (Payload require) - /api/signup
-                        axios.post('', account)
+                        axios.post(`${API_BASE}/api/signup`, information)
                             .then(value => {
                                 //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
                                 if (value.data.message === 'Success') {
@@ -82,19 +90,29 @@ export const Signup = ({ navigation }) => {
                                         phone : account.phone,
                                         password : account.password
                                     }
-                                    axios.post('', payload)
+
+                                    axios.post(`${API_BASE}/api/login`, payload)
                                         .then(data => {
-                                            context.login(payload)
+
+                                            if (data.data.message === 'Success') {
+                                                const navigate = () => {
+                                                    navigation.navigate(`${tabHome}`)
+                                                }
+
+                                                context.loginAfterSignup(payload, navigate);
+                                            } else if (data.data.message === 'Error') {
+                                                setError(true)
+                                            }
                                         })
                                         .catch(reason => {
-
+                                            setError(true)
                                         })
                                 } else if (value.data.message === 'Error') {
-
+                                    setError(true)
                                 }
                             })
                             .catch(reason => {
-
+                                setError(true)
                             })
                     } else if (account.password !== account.verifiedPassword) {
 
@@ -106,13 +124,13 @@ export const Signup = ({ navigation }) => {
 
                     } else if (account.password.length === 0) {
 
+                    } else {
+                        setError(true)
                     }
-
-
 
                 }}
             />
-
+            { error ? <Text> Đã có lỗi xảy ra, vui lòng thử lại </Text> : <Text> </Text> }
         </View>
     )
 }

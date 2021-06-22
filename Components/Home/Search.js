@@ -1,6 +1,7 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext} from 'react'
 import {FlatList, Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {GlobalContext} from '../../AppState'
+import {srcProduct} from "../../Common";
 
 export const Search = ({ navigation }) => {
     const context = useContext(GlobalContext)
@@ -10,7 +11,7 @@ export const Search = ({ navigation }) => {
             <View>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('Sản phẩm', {
+                        navigation.navigate(`${srcProduct}`, {
                             item : item
                         })
                     }}

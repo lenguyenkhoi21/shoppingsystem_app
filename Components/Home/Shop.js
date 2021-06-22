@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
+import {srcProduct, srcSearch} from "../../Common";
 
 export const Shop = ({ navigation }) => {
 
@@ -23,7 +24,7 @@ export const Shop = ({ navigation }) => {
             <View>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('Sản phẩm', {
+                        navigation.navigate(`${srcProduct}`, {
                             item : item
                         })
                     }}
@@ -48,7 +49,7 @@ export const Shop = ({ navigation }) => {
         <View style={{flex : 1}}>
             <View style={{flex : 1}}>
                 <Pressable onPress={() => {
-                    navigation.navigate('Tìm kiếm')
+                    navigation.navigate(`${srcSearch}`)
                 }}>
                     <TextInput
                         style={{height: 40, borderWidth: 1, width : 200, marginLeft :130, marginTop : 10}}

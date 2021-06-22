@@ -5,7 +5,7 @@ import {
     typeAddToCart, typeCancel,
     typeChangeNumber,
     typeFetch,
-    typeLogin,
+    typeLogin, typeLoginAfterSignup,
     typeLogout,
     typeRemoveFromCart,
     typeSearch
@@ -60,6 +60,10 @@ export const AppState = (props) => {
         dispatch({ type : `${typeLogout}`, navigate : navigate })
     }
 
+    const loginAfterSignup = (account, navigate) => {
+        dispatch({ type : `${typeLoginAfterSignup}`, account : account , navigate : navigate })
+    }
+
     return (
         <GlobalContext.Provider
             value={{
@@ -71,7 +75,8 @@ export const AppState = (props) => {
                 fetchData,
                 login,
                 logout,
-                cancel
+                cancel,
+                loginAfterSignup
             }}
         >
             {props.children}

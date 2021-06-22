@@ -1,8 +1,10 @@
 import {
-    typeAddToCart, typeCancel,
+    typeAddToCart,
+    typeCancel,
     typeChangeNumber,
     typeFetch,
     typeLogin,
+    typeLoginAfterSignup,
     typeLogout,
     typeRemoveFromCart,
     typeSearch
@@ -11,7 +13,7 @@ import {
 const add = (product, state) => {
     const array = state.cart
     const exist = array.find(item => {
-        return product.id === item.id
+        return product.product_id === item.product_id
     })
 
     if (exist === undefined) {
@@ -25,7 +27,7 @@ const add = (product, state) => {
     } else {
         let total = 0
         array.forEach(item => {
-            if (item.id === exist.id) {
+            if (item.product_id === exist.product_id) {
                 item.count++
             }
             total += item.count * item.price
@@ -42,7 +44,7 @@ const cancel = (state) => {
 const remove = (product, state) => {
     const total = state.total - (product.price * product.count)
     const totalItem = state.totalItem - product.count
-    const array = state.cart.filter(value => value.id !== product.id)
+    const array = state.cart.filter(value => value.product_id !== product.product_id)
     return {...state, cart : array, total : total, totalItem : totalItem}
 }
 
@@ -63,7 +65,7 @@ const search = (name, state) => {
 
     for (let i = 0; i < findArray.length; i++) {
         for (let j = 0; j < array.length; j++) {
-            if (findArray[i].id === array[j].id) {
+            if (findArray[i].product_id === array[j].product_id) {
                 result.push(array[j])
                 break
             }
@@ -75,7 +77,7 @@ const search = (name, state) => {
 }
 
 const login = (account, state) => {
-    return {...state, user : {...state.user, phone : account.phone}}
+    return {...state, user : {phone : account.phone, token : account.token}}
 }
 
 const logout = (navigate, state) => {
@@ -85,6 +87,11 @@ const logout = (navigate, state) => {
 
 const fetchData = (data, state) => {
     return {...state, products: data}
+}
+
+const loginAfterSignup = (account, navigate, state) => {
+    navigate()
+    return {...state, user : {phone : account.phone, token : account.token}}
 }
 
 export const Reducer = (state, action) => {
@@ -113,6 +120,9 @@ export const Reducer = (state, action) => {
 
         case `${typeCancel}`:
             return cancel(state)
+
+        case `${typeLoginAfterSignup}`:
+            return loginAfterSignup(action.account, action.navigate, state)
 
         default:
             return state

@@ -29,7 +29,12 @@ export const Product = ( { route, navigation } ) => {
             <Button
                 title='Thêm vào giỏ hàng'
                 onPress={() => {
-                    context.addToCart(item)
+                    const product = {
+                        product_id : item.product_id,
+                        name : item.name,
+                        price : item.price
+                    }
+                    context.addToCart(product)
                     navigation.navigate(`${tabCart}`)
                 }}
             />

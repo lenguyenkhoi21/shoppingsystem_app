@@ -30,6 +30,7 @@ export const typeLogin = 'LOGIN'
 export const typeLogout = 'LOGOUT'
 export const typeFetch = 'FETCH'
 export const typeCancel = 'CANCEL'
+export const typeLoginAfterSignup = 'LOGIN_AFTER_SIGNUP'
 
 
 

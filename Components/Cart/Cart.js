@@ -6,13 +6,12 @@ import {GlobalContext} from '../../AppState'
 export const Cart = ({ navigation }) => {
     const context = useContext(GlobalContext)
 
-
     //TODO: Styling here
     return (
         <View>
             {
                 context.store.cart.map((value, index) => (
-                    <View key={value.id}>
+                    <View key={value.product_id}>
                         <Text> {value.name} </Text>
                         <Text> {value.price} </Text>
                         <Text> {value.count} </Text>

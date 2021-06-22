@@ -3,6 +3,7 @@ import {Button, Text, TextInput, View} from 'react-native'
 import {srcLogin, srcSignup, tabHome} from '../../Common'
 import axios from 'axios'
 import {GlobalContext} from '../../AppState'
+import {API_BASE} from "../../App.config";
 
 export const Login = ({ navigation }) => {
     const [account, setAccount] = useState({
@@ -38,11 +39,15 @@ export const Login = ({ navigation }) => {
                 title='Đăng nhập'
                 onPress={()=>{
                     //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
-                    axios.post(``, account)
+                    axios.post(`${API_BASE}/api/login`, account)
                         .then(value => {
                             if (value.data.message==='Success') {
                                 setFail(false)
-                                context.login(account)
+                                const user = {
+                                    phone : value.data.phone,
+                                    token : value.data.token
+                                }
+                                context.login(user)
                             } else {
                                 setFail(true)
                             }
