@@ -27,7 +27,7 @@ export const Shop = ({ navigation }) => {
                             item : item
                         })
                     }}
-                    key={item.id}
+                    key={item.product_id}
                 >
                     <Text>  {item.name}  </Text>
 
@@ -65,7 +65,7 @@ export const Shop = ({ navigation }) => {
                         <FlatList
                             data={data}
                             renderItem={Item}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.product_id}
                         />
                     </ScrollView>
                 </SafeAreaView>

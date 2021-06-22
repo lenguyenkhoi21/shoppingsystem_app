@@ -11,6 +11,8 @@ import {style} from './AppStyle'
 import {tabCart, tabFavorite, tabHome, tabUser} from './Common'
 import {AppState, GlobalContext} from './AppState'
 import {image1, image2, image3, image4} from './DummyData'
+import {API_BASE} from "./App.config";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator()
 
@@ -19,32 +21,39 @@ const MainScreen = () => {
 
     //TODO Fetch API From Here - Method GET - /api/fetch
     useEffect(() => {
-        context.fetchData([
-            {
-                id: '1',
-                name: 'Trà sữa chân châu',
-                price: 19000,
-                image: `${image1}`
-            },
-            {
-                id: '2',
-                name: 'Trà sữa truyền thống',
-                price: 29000,
-                image: `${image2}`
-            },
-            {
-                id: '3',
-                name: 'Trà đào',
-                price: 26000,
-                image: `${image3}`
-            },
-            {
-                id: '4',
-                name: 'Nước cam',
-                price: 29000,
-                image: `${image4}`
-            }
-        ])
+        axios.get(`${API_BASE}/api/fetch`)
+            .then(value => {
+                context.fetchData(value.data.products)
+            })
+            .catch(reason => {
+
+            })
+        // context.fetchData([
+        //     {
+        //         id: '1',
+        //         name: 'Trà sữa chân châu',
+        //         price: 19000,
+        //         image: `${image1}`
+        //     },
+        //     {
+        //         id: '2',
+        //         name: 'Trà sữa truyền thống',
+        //         price: 29000,
+        //         image: `${image2}`
+        //     },
+        //     {
+        //         id: '3',
+        //         name: 'Trà đào',
+        //         price: 26000,
+        //         image: `${image3}`
+        //     },
+        //     {
+        //         id: '4',
+        //         name: 'Nước cam',
+        //         price: 29000,
+        //         image: `${image4}`
+        //     }
+        // ])
 
         return () => {
 

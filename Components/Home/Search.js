@@ -48,7 +48,7 @@ export const Search = ({ navigation }) => {
                         <FlatList
                             data={context.store.search}
                             renderItem={Item}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.product_id}
                         />
                     </ScrollView>
                 </SafeAreaView>
