@@ -98,8 +98,11 @@ export const Signup = ({ navigation }) => {
                                                 const navigate = () => {
                                                     navigation.navigate(`${tabHome}`)
                                                 }
-
-                                                context.loginAfterSignup(payload, navigate);
+                                                const next = {
+                                                    phone : payload.phone,
+                                                    token : data.data.token
+                                                }
+                                                context.loginAfterSignup(next, navigate);
                                             } else if (data.data.message === 'Error') {
                                                 setError(true)
                                             }

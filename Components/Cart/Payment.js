@@ -34,7 +34,7 @@ export const Payment = ({ navigation }) => {
                         }
                     })
                         .then(value => {
-                            if (value==='Success') {
+                            if (value.data.message ==='Success') {
                                 navigation.navigate(`${srcSuccess}`)
                             }
 
