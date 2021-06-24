@@ -3,9 +3,11 @@ import {Image, Text, View} from 'react-native'
 import axios from "axios";
 import {API_BASE} from "../../App.config";
 import {GlobalContext} from "../../AppState";
+import {useIsFocused} from "@react-navigation/native";
 
 export const Account = () => {
     const context = useContext(GlobalContext)
+    const isFocused = useIsFocused()
     const [profile, setProfile] = useState({
         name : null,
         email : null,
@@ -38,7 +40,7 @@ export const Account = () => {
         return () => {
 
         }
-    }, [])
+    }, [isFocused])
 
     //TODO: Template, POST API to update account - Method: PATCH (Payload Require) - /api/profile/
     return (

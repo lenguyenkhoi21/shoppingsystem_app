@@ -4,12 +4,13 @@ import {srcDetail} from '../../Common'
 import axios from "axios";
 import {API_BASE} from "../../App.config";
 import {GlobalContext} from "../../AppState";
+import {useIsFocused} from "@react-navigation/native";
 
 export const History = ({ navigation }) => {
     const [history, setHistory] = useState({
         data : null
     })
-
+    const isFocused = useIsFocused()
     const context = useContext(GlobalContext)
 
     //TODO: Fetch API From Database to show history - Method : GET - /api/history/:phone
@@ -36,7 +37,7 @@ export const History = ({ navigation }) => {
         return () => {
 
         }
-    }, [])
+    }, [isFocused])
 
     const Item = ({item}) => {
         return (

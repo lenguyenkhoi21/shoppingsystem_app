@@ -1,7 +1,9 @@
 import {Button, Image, Text, View} from 'react-native'
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
-import {tabCart} from '../../Common'
+import {srcFavorite, srcLogin, tabCart, tabFavorite} from '../../Common'
+import axios from "axios";
+import {API_BASE} from "../../App.config";
 
 
 export const Product = ( { route, navigation } ) => {
@@ -22,9 +24,33 @@ export const Product = ( { route, navigation } ) => {
             <Button
                 title='Thêm vào danh sách yêu thích'
                 onPress={() => {
-                    //navigation.navigate('Yêu thích')
+                    if (context.store.user.phone === null) {
+                        navigation.navigate(`${tabFavorite}`)
+                    } else {
+                        const payload = {
+                            phone: context.store.user.phone,
+                            product_id: item.product_id,
+                            status: true
+                        }
+
+                        axios.patch(`${API_BASE}/api/favorite`, payload, {
+                            headers: {
+                                Authorization : `Bearer ${context.store.user.token}`
+                            }
+                        })
+                            .then(value => {
+                                if (value.data.message === 'Success') {
+                                    navigation.navigate(`${tabFavorite}`)
+                                }
+                            })
+                            .catch(reason => {
+
+                            })
+
+                    }
                 }}
             />
+
             <Text> {item.price} </Text>
             <Button
                 title='Thêm vào giỏ hàng'
