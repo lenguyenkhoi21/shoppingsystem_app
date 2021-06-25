@@ -1,7 +1,7 @@
 import {Button, Image, Text, View} from 'react-native'
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
-import {srcFavorite, srcLogin, tabCart, tabFavorite} from '../../Common'
+import {tabCart, tabFavorite} from '../../Common'
 import axios from "axios";
 import {API_BASE} from "../../App.config";
 

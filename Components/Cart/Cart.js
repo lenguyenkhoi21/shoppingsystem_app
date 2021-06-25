@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {Button, Text, View} from 'react-native'
 import {srcPayment} from '../../Common'
 import {GlobalContext} from '../../AppState'
@@ -23,7 +23,6 @@ export const Cart = ({ navigation }) => {
                         />
                     </View>
                 ))
-
             }
             <Text> {context.store.total > 0 ? <Text> {context.store.total}</Text> : <Text/>}  </Text>
             <Button

@@ -16,26 +16,26 @@ export const Account = () => {
 
     //TODO: Fetch API Account - Method: GET - /api/profile/:phone
     useEffect(() => {
-        axios.get(`${API_BASE}/api/profile/${context.store.user.phone}`, {
-            headers: {
-                Authorization : `Bearer ${context.store.user.token}`
-            }
-        })
-            .then(value => {
-                if (value.data.message === 'Success') {
-
-                    setProfile({
-                        name : value.data.name,
-                        email : value.data.email,
-                        avatar : value.data.avatar
-                    })
+        if (isFocused) {
+            axios.get(`${API_BASE}/api/profile/${context.store.user.phone}`, {
+                headers: {
+                    Authorization : `Bearer ${context.store.user.token}`
                 }
             })
-            .catch(reason => {
+                .then(value => {
+                    if (value.data.message === 'Success') {
 
-            })
+                        setProfile({
+                            name : value.data.name,
+                            email : value.data.email,
+                            avatar : value.data.avatar
+                        })
+                    }
+                })
+                .catch(reason => {
 
-
+                })
+        }
 
         return () => {
 

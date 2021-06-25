@@ -15,24 +15,26 @@ export const History = ({ navigation }) => {
 
     //TODO: Fetch API From Database to show history - Method : GET - /api/history/:phone
     useEffect(() => {
-        axios.get(`${API_BASE}/api/history/${context.store.user.phone}`, {
-            headers: {
-                Authorization : `Bearer ${context.store.user.token}`
-            }
-        })
-            .then(value => {
-
-                if (value.data.message === 'Success') {
-                    setHistory({
-                        data: value.data.history
-                    })
-
+        if (isFocused) {
+            axios.get(`${API_BASE}/api/history/${context.store.user.phone}`, {
+                headers: {
+                    Authorization : `Bearer ${context.store.user.token}`
                 }
-
             })
-            .catch(reason => {
+                .then(value => {
 
-            })
+                    if (value.data.message === 'Success') {
+                        setHistory({
+                            data: value.data.history
+                        })
+
+                    }
+
+                })
+                .catch(reason => {
+
+                })
+        }
 
         return () => {
 

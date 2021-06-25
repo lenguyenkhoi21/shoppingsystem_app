@@ -8,9 +8,13 @@ import {UserScreen} from './Components/User/UserScreen'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {AuthenticationScreen} from './Components/Authentication/AuthenticationScreen'
 import {style} from './AppStyle'
-import {tabCart, tabFavorite, tabHome, tabUser} from './Common'
+import {
+    tabCart,
+    tabFavorite,
+    tabHome,
+    tabUser}
+from './Common'
 import {AppState, GlobalContext} from './AppState'
-import {image1, image2, image3, image4} from './DummyData'
 import {API_BASE} from "./App.config";
 import axios from "axios";
 
@@ -28,33 +32,6 @@ const MainScreen = () => {
             .catch(reason => {
 
             })
-        // context.fetchData([
-        //     {
-        //         id: '1',
-        //         name: 'Trà sữa chân châu',
-        //         price: 19000,
-        //         image: `${image1}`
-        //     },
-        //     {
-        //         id: '2',
-        //         name: 'Trà sữa truyền thống',
-        //         price: 29000,
-        //         image: `${image2}`
-        //     },
-        //     {
-        //         id: '3',
-        //         name: 'Trà đào',
-        //         price: 26000,
-        //         image: `${image3}`
-        //     },
-        //     {
-        //         id: '4',
-        //         name: 'Nước cam',
-        //         price: 29000,
-        //         image: `${image4}`
-        //     }
-        // ])
-
         return () => {
 
         }

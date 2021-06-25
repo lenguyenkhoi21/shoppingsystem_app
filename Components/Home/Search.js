@@ -1,5 +1,14 @@
 import React, {useContext} from 'react'
-import {FlatList, Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {
+    FlatList,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View}
+from 'react-native'
 import {GlobalContext} from '../../AppState'
 import {srcProduct} from "../../Common";
 

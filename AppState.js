@@ -2,10 +2,12 @@ import React, {useReducer} from 'react'
 import {createContext} from 'react'
 import {Reducer} from './Reducer'
 import {
-    typeAddToCart, typeCancel,
+    typeAddToCart,
+    typeCancel,
     typeChangeNumber,
     typeFetch,
-    typeLogin, typeLoginAfterSignup,
+    typeLogin,
+    typeLoginAfterSignup,
     typeLogout,
     typeRemoveFromCart,
     typeSearch

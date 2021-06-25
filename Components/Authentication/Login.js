@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {Button, Text, TextInput, View} from 'react-native'
-import {srcLogin, srcSignup, tabHome} from '../../Common'
+import {srcSignup} from '../../Common'
 import axios from 'axios'
 import {GlobalContext} from '../../AppState'
 import {API_BASE} from "../../App.config";
