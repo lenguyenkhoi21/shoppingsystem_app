@@ -6,8 +6,7 @@ import {
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart,
-    typeSearch
+    typeRemoveFromCart
 } from './Common'
 
 const add = (product, state) => {
@@ -52,30 +51,6 @@ const change = (product, number, state) => {
 
 }
 
-const search = (name, state) => {
-    const array = state.products
-
-    array.forEach(value => {
-        value.name = value.name.toLowerCase()
-    })
-
-    const findArray = array.filter(array => array.name.includes(name.toLowerCase()))
-
-    let result = []
-
-    for (let i = 0; i < findArray.length; i++) {
-        for (let j = 0; j < array.length; j++) {
-            if (findArray[i].product_id === array[j].product_id) {
-                result.push(array[j])
-                break
-            }
-        }
-    }
-
-    return {...state, search : result}
-
-}
-
 const login = (account, state) => {
     return {...state, user : {phone : account.phone, token : account.token}}
 }
@@ -105,9 +80,6 @@ export const Reducer = (state, action) => {
 
         case `${typeChangeNumber}`:
             return change(action.product, action.count, state)
-
-        case `${typeSearch}`:
-            return search(action.name, state)
 
         case `${typeLogin}`:
             return login(action.account, state)

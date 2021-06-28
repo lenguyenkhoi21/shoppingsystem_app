@@ -1,59 +1,42 @@
-import {Button, Image, Text, View} from 'react-native'
+import {
+    Image,
+    Text,
+    TouchableOpacity,
+    View
+}
+from 'react-native'
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
-import {tabCart, tabFavorite} from '../../Common'
-import axios from "axios";
-import {API_BASE} from "../../App.config";
-
+import {tabCart} from '../../Common'
+import {style} from './HomeStyle'
 
 export const Product = ( { route, navigation } ) => {
     const context = useContext(GlobalContext)
     const { item } = route.params
+    const setProduct = route.params.setProduct
+    setProduct(item.product_id)
 
     //TODO: Styling here
     return (
-        <View>
-            <Text>  {item.name}  </Text>
-            <Image
-                style={{ height : 200, width : 200 }}
-                source={{
-                    uri: `${item.image}`
-                }}
-            />
+        <View style={[style.center, style.viewProduct]} >
+            <View style={style.center}>
 
-            <Button
-                title='Thêm vào danh sách yêu thích'
-                onPress={() => {
-                    if (context.store.user.phone === null) {
-                        navigation.navigate(`${tabFavorite}`)
-                    } else {
-                        const payload = {
-                            phone: context.store.user.phone,
-                            product_id: item.product_id,
-                            status: true
-                        }
+                <Image
+                    style={[style.imageProduct, style.viewItem]}
+                    source={{
+                        uri: `${item.image}`
+                    }}
+                />
 
-                        axios.patch(`${API_BASE}/api/favorite`, payload, {
-                            headers: {
-                                Authorization : `Bearer ${context.store.user.token}`
-                            }
-                        })
-                            .then(value => {
-                                if (value.data.message === 'Success') {
-                                    navigation.navigate(`${tabFavorite}`)
-                                }
-                            })
-                            .catch(reason => {
+                <Text style={style.nameProduct}> {item.name}  </Text>
+                <Text style={[style.nameProduct, style.priceProduct]}> {item.price} VNĐ </Text>
 
-                            })
+                <Text style={style.desProduct}> Mô tả: <Text style={style.desNormalProduct}> {item.description} </Text> </Text>
+            </View>
 
-                    }
-                }}
-            />
-
-            <Text> {item.price} </Text>
-            <Button
-                title='Thêm vào giỏ hàng'
+            <TouchableOpacity
+                title=''
+                style={style.btn}
                 onPress={() => {
                     const product = {
                         product_id : item.product_id,
@@ -63,8 +46,9 @@ export const Product = ( { route, navigation } ) => {
                     context.addToCart(product)
                     navigation.navigate(`${tabCart}`)
                 }}
-            />
-
+            >
+                <Text style={style.btnText}> Thêm vào giỏ hàng </Text>
+            </TouchableOpacity>
         </View>
     )
 }

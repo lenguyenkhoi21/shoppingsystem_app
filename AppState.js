@@ -9,8 +9,7 @@ import {
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart,
-    typeSearch
+    typeRemoveFromCart
 } from './Common'
 
 export const GlobalContext = createContext()
@@ -21,7 +20,6 @@ export const AppState = (props) => {
         cart : [],
         total : 0,
         totalItem : 0,
-        search : [],
         user : {
             phone : null,
             token : null
@@ -44,10 +42,6 @@ export const AppState = (props) => {
 
     const changeNumber = (product, count) => {
         dispatch({ type : `${typeChangeNumber}`, product : product, count : count })
-    }
-
-    const searchProduct = (name) => {
-        dispatch({ type : `${typeSearch}`, name : name })
     }
 
     const fetchData = (data) => {
@@ -73,7 +67,6 @@ export const AppState = (props) => {
                 addToCart,
                 removeFromCart,
                 changeNumber,
-                searchProduct,
                 fetchData,
                 login,
                 logout,

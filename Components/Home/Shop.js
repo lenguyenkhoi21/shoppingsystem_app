@@ -12,33 +12,37 @@ import {
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
 import {srcProduct, srcSearch} from "../../Common";
+import {style} from './HomeStyle'
 
 export const Shop = ({ navigation }) => {
-
     const context = useContext(GlobalContext)
     const data = context.store.products
 
     //TODO: Styling here
     const Item = ( {item} ) => {
         return (
-            <View>
+            <View style={style.viewItem} >
                 <TouchableOpacity
                     onPress={() => {
+                        // const draft = {
+                        //     price : item.price,
+                        //     name : item.name,
+                        //     product_id : item.product_id
+                        // }
                         navigation.navigate(`${srcProduct}`, {
                             item : item
                         })
                     }}
                     key={item.product_id}
+                    style={style.center}
                 >
-                    <Text>  {item.name}  </Text>
-
                     <Image
-                        style={{ height : 200, width : 200 }}
+                        style={style.imageProduct}
                         source={{
                             uri: `${item.image}`
                         }}
                     />
-                    <Text> {item.price} </Text>
+                    <Text style={style.textProduct} > {item.name} </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -46,13 +50,13 @@ export const Shop = ({ navigation }) => {
 
     //TODO: Styling here
     return (
-        <View style={{flex : 1}}>
-            <View style={{flex : 1}}>
+        <View style={style.viewContainer}>
+            <View style={style.viewChildren1}>
                 <Pressable onPress={() => {
                     navigation.navigate(`${srcSearch}`)
                 }}>
                     <TextInput
-                        style={{height: 40, borderWidth: 1, width : 200, marginLeft :130, marginTop : 10}}
+                        style={style.textSearch}
                         editable={false}
                         selectTextOnFocus={false}
                         placeholder='Tìm kiếm ...'
@@ -60,17 +64,19 @@ export const Shop = ({ navigation }) => {
                 </Pressable>
             </View>
 
-            <View style={{flex : 9}}>
+            <View style={style.viewChildren9}>
                 <SafeAreaView>
                     <ScrollView>
                         <FlatList
                             data={data}
                             renderItem={Item}
                             keyExtractor={item => item.product_id}
+                            contentContainerStyle={style.center}
                         />
                     </ScrollView>
                 </SafeAreaView>
             </View>
+
         </View>
     )
 }
