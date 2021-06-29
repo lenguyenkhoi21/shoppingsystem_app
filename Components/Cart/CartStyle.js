@@ -44,7 +44,7 @@ export const style = StyleSheet.create({
     btnPosition: {
         position: 'relative',
         bottom: 2,
-        left: 160
+        left: 145
     },
     title: {
         flex: 1,

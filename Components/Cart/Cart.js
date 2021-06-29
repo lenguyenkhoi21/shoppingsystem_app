@@ -79,6 +79,7 @@ export const Cart = ({ navigation }) => {
                     <View
                         style={{
                             marginTop: 200,
+                            marginBottom : 50
                         }}>
                         <Button
                             title = 'Thanh toán'

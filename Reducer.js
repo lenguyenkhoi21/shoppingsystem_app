@@ -6,8 +6,17 @@ import {
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart, typePayment
+    typeRemoveFromCart,
+    typePayment
 } from './Common'
+
+const increment = (product, state) => {
+
+}
+
+const decrement = (product, state) => {
+    
+}
 
 const add = (product, state) => {
     const array = state.cart
