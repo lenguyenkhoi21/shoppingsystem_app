@@ -3,13 +3,13 @@ import {createContext} from 'react'
 import {Reducer} from './Reducer'
 import {
     typeAddToCart,
-    typeCancel,
+    typeClear,
     typeChangeNumber,
     typeFetch,
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart
+    typeRemoveFromCart, typePayment
 } from './Common'
 
 export const GlobalContext = createContext()
@@ -28,8 +28,8 @@ export const AppState = (props) => {
 
     const [store, dispatch] = useReducer(Reducer, initialState)
 
-    const cancel = () => {
-        dispatch({ type : `${typeCancel}` })
+    const clear = () => {
+        dispatch({ type : `${typeClear}` })
     }
 
     const addToCart = (product) => {
@@ -60,6 +60,10 @@ export const AppState = (props) => {
         dispatch({ type : `${typeLoginAfterSignup}`, account : account , navigate : navigate })
     }
 
+    const payment = (navigate) => {
+        dispatch({ type : `${typePayment}`, navigate : navigate })
+    }
+
     return (
         <GlobalContext.Provider
             value={{
@@ -70,8 +74,9 @@ export const AppState = (props) => {
                 fetchData,
                 login,
                 logout,
-                cancel,
-                loginAfterSignup
+                clear,
+                loginAfterSignup,
+                payment
             }}
         >
             {props.children}

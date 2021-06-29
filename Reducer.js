@@ -1,12 +1,12 @@
 import {
     typeAddToCart,
-    typeCancel,
+    typeClear,
     typeChangeNumber,
     typeFetch,
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart
+    typeRemoveFromCart, typePayment
 } from './Common'
 
 const add = (product, state) => {
@@ -36,7 +36,7 @@ const add = (product, state) => {
     }
 }
 
-const cancel = (state) => {
+const clear = (state) => {
     return {...state, total : 0, cart: [], totalItem : 0}
 }
 
@@ -69,6 +69,11 @@ const loginAfterSignup = (account, navigate, state) => {
     return {...state, user : {phone : account.phone, token : account.token}}
 }
 
+const payment = (navigate, state) => {
+    navigate()
+    return {...state, cart : [], total : 0, totalItem: 0}
+}
+
 export const Reducer = (state, action) => {
 
     switch (action.type) {
@@ -90,11 +95,14 @@ export const Reducer = (state, action) => {
         case `${typeFetch}`:
             return fetchData(action.data, state)
 
-        case `${typeCancel}`:
-            return cancel(state)
+        case `${typeClear}`:
+            return clear(state)
 
         case `${typeLoginAfterSignup}`:
             return loginAfterSignup(action.account, action.navigate, state)
+
+        case `${typePayment}`:
+            return payment(action.navigate, state)
 
         default:
             return state

@@ -28,7 +28,8 @@ export const typeChangeNumber = 'CHANGE_NUMBER'
 export const typeLogin = 'LOGIN'
 export const typeLogout = 'LOGOUT'
 export const typeFetch = 'FETCH'
-export const typeCancel = 'CANCEL'
+export const typeClear = 'CANCEL'
+export const typePayment = 'PAYMENT'
 export const typeLoginAfterSignup = 'LOGIN_AFTER_SIGNUP'
 
 
