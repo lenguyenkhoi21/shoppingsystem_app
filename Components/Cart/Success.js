@@ -1,7 +1,8 @@
 import React from 'react'
-import {Text, View} from 'react-native'
+import {Image, Text, View} from 'react-native'
 import { CommonActions } from '@react-navigation/native'
 import {srcCart} from "../../Common"
+import {style} from "./CartStyle"
 
 export const Success = ({ navigation }) => {
     setTimeout(() => {
@@ -11,11 +12,15 @@ export const Success = ({ navigation }) => {
                 routes : [{name : `${srcCart}`}]
             })
         )
-    }, 2000)
+    }, 3000)
 
     //TODO: Styling here
     return (
-        <View>
+        <View style={[style.sadFacePosition, style.center]}>
+            <Image
+                style={style.sadFace}
+                source = {require('../../assets/success.png')}
+            />
             <Text> Bạn đã đặt hàng thành công </Text>
             <Text> Chúc bạn một ngày may mắn </Text>
         </View>

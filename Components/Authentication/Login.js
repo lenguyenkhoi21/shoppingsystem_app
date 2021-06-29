@@ -1,9 +1,10 @@
 import React, {useContext, useState} from 'react'
-import {Button, Text, TextInput, View} from 'react-native'
+import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {srcSignup} from '../../Common'
 import axios from 'axios'
 import {GlobalContext} from '../../AppState'
-import {API_BASE} from "../../App.config";
+import {API_BASE} from '../../App.config'
+import {style} from './AuthenticationStyle'
 
 export const Login = ({ navigation }) => {
     const [account, setAccount] = useState({
@@ -17,53 +18,64 @@ export const Login = ({ navigation }) => {
 
     //TODO: Styling here
     return (
-        <View>
-            <TextInput
-                style={{height: 40, borderWidth: 1, width : 200}}
-                onChangeText = {(phone) => {
-                    setAccount({...account, phone: phone})
-                }}
-                placeholder='Số điện thoại'
-            />
+        <View style={[style.center, style.viewWrapper]}>
+            <View style={style.txtWrapper}>
+                <TextInput
+                    style={style.txtInput}
+                    onChangeText = {(phone) => {
+                        setAccount({...account, phone: phone})
+                    }}
+                    placeholder='Số điện thoại'
+                />
 
-            <TextInput
-                style={{height: 40, borderWidth: 1, width : 200}}
-                onChangeText = {(password) => {
-                    setAccount({...account, password: password})
-                }}
-                secureTextEntry={true}
-                placeholder='Mật Khẩu'
-            />
+                <TextInput
+                    style={style.txtInput}
+                    onChangeText = {(password) => {
+                        setAccount({...account, password: password})
+                    }}
+                    secureTextEntry={true}
+                    placeholder='Mật Khẩu'
+                />
+            </View>
 
-            <Button
-                title='Đăng nhập'
-                onPress={()=>{
-                    //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
-                    axios.post(`${API_BASE}/api/login`, account)
-                        .then(value => {
-                            if (value.data.message==='Success') {
-                                setFail(false)
-                                const user = {
-                                    phone : value.data.phone,
-                                    token : value.data.token
-                                }
-                                context.login(user)
-                            } else {
-                                setFail(true)
-                            }
-                        })
-                        .catch(reason => {
+            <View style={style.funcWrapper}>
+                <View style={style.txtFunc}>
+                    <TouchableOpacity
+                        style={style.loginBtn}
+                        onPress={()=>{
+                            //TODO: Fetch API Login Here - Method: POST (Payload require) - /api/login
+                            axios.post(`${API_BASE}/api/login`, account)
+                                .then(value => {
+                                    if (value.data.message==='Success') {
+                                        setFail(false)
+                                        const user = {
+                                            phone : value.data.phone,
+                                            token : value.data.token
+                                        }
+                                        context.login(user)
+                                    } else {
+                                        setFail(true)
+                                    }
+                                })
+                                .catch(reason => {
 
-                        })
-                }}
-            />
+                                })
+                        }}
+                    >
+                        <Text style={style.txtColorBtn}> Đăng nhập </Text>
+                    </TouchableOpacity>
 
-            <Button
-                title='Đăng ký'
-                onPress= {() => {
-                    navigation.navigate(`${srcSignup}`)
-                }}
-            />
+                    <TouchableOpacity
+                        style={style.signupBtn}
+                        onPress= {() => {
+                            navigation.navigate(`${srcSignup}`)
+                        }}
+                    >
+                        <Text style={style.txtColorBtn}> Đăng ký </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
 
             {fail === null ? <Text> </Text> : <Text> Đăng nhập thất bại </Text> }
         </View>

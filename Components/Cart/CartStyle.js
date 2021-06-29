@@ -104,8 +104,9 @@ export const style = StyleSheet.create({
         marginRight: 10
     },
     bottomBtn : {
-        marginTop: 200,
-        marginBottom : 50
+        marginTop: 10,
+        marginBottom : 50,
+        padding : 20
     },
     viewProductCart : {
         flexDirection: 'row'
@@ -113,5 +114,36 @@ export const style = StyleSheet.create({
     titleTextCount : {
         marginRight: 7,
         marginLeft: 7
+    },
+    sadFace : {
+        height : 200,
+        width : 200,
+        marginBottom: 20
+    },
+    sadFacePosition : {
+        marginTop: 70
+    },
+    safeView : {
+        marginBottom : 20
+    },
+    orderButton : {
+        backgroundColor:'#FA4A0C',
+        borderRadius: 5,
+        padding : 5
+    },
+    orderButtonText : {
+        color : 'white',
+        fontWeight : 'bold'
+    },
+    buttonLeft : {
+        position : 'absolute',
+        left: 0
+    },
+    buttonRight : {
+        position : 'absolute',
+        right: 0
+    },
+    buttons : {
+        padding : 0
     }
 })

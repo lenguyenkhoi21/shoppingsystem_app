@@ -7,9 +7,21 @@ import {style} from "./CartStyle"
 export const Cart = ({ navigation }) => {
     const context = useContext(GlobalContext)
 
+    if (context.store.cart.length === 0) {
+        return (
+            <View style={[style.sadFacePosition, style.center]}>
+                <Image
+                    style={style.sadFace}
+                    source = {require('../../assets/sad_face.png')}
+                />
+                <Text> Xin lỗi bạn chưa có sản phẩm nào trong giỏ hàng ! </Text>
+            </View>
+        )
+    }
+
     //TODO: Styling here
     return (
-        <SafeAreaView>
+        <SafeAreaView style={style.safeView}>
             <ScrollView>
                 <View>
                     {
@@ -96,21 +108,30 @@ export const Cart = ({ navigation }) => {
                         ))
                     }
 
-                    <View
-                        style={style.bottomBtn}>
-                        <Button
-                            title = 'Thanh toán'
-                            onPress = {() => {
-                                navigation.navigate(`${srcPayment}`)
-                            }}
-                        />
+                    <View style={style.bottomBtn}>
+                        <View
+                            style={style.buttons}
+                        >
+                            <TouchableOpacity
+                                style={[style.orderButton, style.buttonLeft]}
+                                onPress = {() => {
+                                    context.clear()
+                                }}
+                            >
+                                <Text style={style.orderButtonText}> Hủy </Text>
+                            </TouchableOpacity>
 
-                        <Button
-                            title = 'Hủy'
-                            onPress = {() => {
-                                context.store.remove()
-                            }}
-                        />
+                            <TouchableOpacity
+                                style={[style.orderButton, style.buttonRight]}
+                                onPress = {() => {
+                                    navigation.navigate(`${srcPayment}`)
+                                }}
+                            >
+                                <Text style={style.orderButtonText}> Thanh toán </Text>
+                            </TouchableOpacity>
+
+
+                        </View>
                     </View>
                 </View>
             </ScrollView>
