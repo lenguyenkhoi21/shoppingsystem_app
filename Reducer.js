@@ -7,15 +7,52 @@ import {
     typeLoginAfterSignup,
     typeLogout,
     typeRemoveFromCart,
-    typePayment
+    typePayment,
+    typeIncrement,
+    typeDecrement
 } from './Common'
 
 const increment = (product, state) => {
+    const array = state.cart
+    const exist = array.find(item => {
+        return product.product_id === item.product_id
+    })
+
+    let total = 0
+    array.forEach(item => {
+        if (item.product_id === exist.product_id) {
+            item.count++
+        }
+        total += item.count * item.price
+    })
+    const totalItem = state.totalItem + 1
+    return {...state, cart : array, total : total, totalItem : totalItem}
 
 }
 
 const decrement = (product, state) => {
-    
+    const array = state.cart
+    const exist = array.find(item => {
+        return product.product_id === item.product_id
+    })
+
+    let total = 0
+    let isMinus = false
+    array.forEach(item => {
+        if (item.product_id === exist.product_id && item.count - 1 > 0) {
+            item.count--
+            isMinus = true
+        }
+        total += item.count * item.price
+    })
+    let totalItem
+    if (isMinus) {
+        totalItem = state.totalItem - 1
+    } else {
+        totalItem = state.totalItem
+    }
+
+    return {...state, cart : array, total : total, totalItem : totalItem}
 }
 
 const add = (product, state) => {
@@ -112,6 +149,12 @@ export const Reducer = (state, action) => {
 
         case `${typePayment}`:
             return payment(action.navigate, state)
+
+        case `${typeIncrement}`:
+            return increment(action.product, state)
+
+        case `${typeDecrement}`:
+            return decrement(action.product, state)
 
         default:
             return state

@@ -1,5 +1,4 @@
-import React, {useReducer} from 'react'
-import {createContext} from 'react'
+import React, {useReducer, createContext} from 'react'
 import {Reducer} from './Reducer'
 import {
     typeAddToCart,
@@ -9,7 +8,10 @@ import {
     typeLogin,
     typeLoginAfterSignup,
     typeLogout,
-    typeRemoveFromCart, typePayment
+    typeRemoveFromCart,
+    typePayment,
+    typeIncrement,
+    typeDecrement
 } from './Common'
 
 export const GlobalContext = createContext()
@@ -27,6 +29,14 @@ export const AppState = (props) => {
     }
 
     const [store, dispatch] = useReducer(Reducer, initialState)
+
+    const increment = (product) => {
+        dispatch({type : `${typeIncrement}`,  product : product})
+    }
+
+    const decrement = (product) => {
+        dispatch({type : `${typeDecrement}`,  product : product})
+    }
 
     const clear = () => {
         dispatch({ type : `${typeClear}` })
@@ -76,7 +86,9 @@ export const AppState = (props) => {
                 logout,
                 clear,
                 loginAfterSignup,
-                payment
+                payment,
+                increment,
+                decrement
             }}
         >
             {props.children}

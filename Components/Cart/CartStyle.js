@@ -90,11 +90,28 @@ export const style = StyleSheet.create({
         height: 15
     },
     textSpace: {
-        marginBottom: 10
+        marginBottom: 10,
     },
     changeIcon: {
         width: 12,
         height: 12,
         marginTop: 3
+    },
+    nameProduct : {
+        width : 130
+    },
+    textCount : {
+        marginRight: 10
+    },
+    bottomBtn : {
+        marginTop: 200,
+        marginBottom : 50
+    },
+    viewProductCart : {
+        flexDirection: 'row'
+    },
+    titleTextCount : {
+        marginRight: 7,
+        marginLeft: 7
     }
 })

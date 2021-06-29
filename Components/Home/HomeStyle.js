@@ -69,5 +69,8 @@ export const style = StyleSheet.create({
     },
     desNormalProduct : {
         fontWeight : 'normal'
+    },
+    safeViewMargin : {
+        marginBottom : 50
     }
 })

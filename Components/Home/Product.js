@@ -20,7 +20,7 @@ export const Product = ( { route, navigation } ) => {
     //TODO: Styling here
     return (
         <ScrollView>
-            <SafeAreaView style={{marginBottom : 50}}>
+            <SafeAreaView style={style.safeViewMargin}>
                 <View style={[style.center, style.viewProduct]} >
                     <View style={style.center}>
 

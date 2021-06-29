@@ -18,7 +18,7 @@ export const Payment = ({ navigation }) => {
         context.store.cart.map(value => {
             const row = []
             const image = <Image
-                style={{height : 75, width : 75}}
+                style={style.productImage}
                 source={{
                     uri: value.image
                 }}

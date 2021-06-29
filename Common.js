@@ -31,6 +31,8 @@ export const typeFetch = 'FETCH'
 export const typeClear = 'CANCEL'
 export const typePayment = 'PAYMENT'
 export const typeLoginAfterSignup = 'LOGIN_AFTER_SIGNUP'
+export const typeDecrement = 'DECREMENT'
+export const typeIncrement = 'INCREMENT'
 
 
 

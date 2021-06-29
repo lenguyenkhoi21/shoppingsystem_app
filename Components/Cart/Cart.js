@@ -30,22 +30,42 @@ export const Cart = ({ navigation }) => {
 
                                     <View style={style.contentWrapper}>
                                         <View style={style.cartInfoWrapper}>
-                                            <Text style={style.textSpace}> {value.name} </Text>
-                                            <Text style={style.textSpace}> {value.price} </Text>
-                                            <View style={{flexDirection: 'row'}}>
-                                                <TouchableOpacity>
+                                            <Text style={[style.textSpace, style.nameProduct]}> Sản phẩm: {value.name} </Text>
+                                            <Text style={style.textSpace}> Đơn giá: {value.price} </Text>
+                                            <View style={style.viewProductCart}>
+                                                <Text style={style.textCount} > Số lượng: </Text>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        const product = {
+                                                            product_id : value.product_id,
+                                                            image : value.image,
+                                                            name : value.name,
+                                                            price : value.price
+                                                        }
+
+                                                        context.decrement(product)
+                                                    }}
+                                                >
                                                     <Image
                                                         style={style.changeIcon}
                                                         source={require('../../assets/minus.png')}
                                                     />
                                                 </TouchableOpacity>
                                                 <Text
-                                                    style={{
-                                                        marginRight: 7,
-                                                        marginLeft: 7
-                                                    }}
+                                                    style={style.titleTextCount}
                                                 > {value.count} </Text>
-                                                <TouchableOpacity>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        const product = {
+                                                            product_id : value.product_id,
+                                                            image : value.image,
+                                                            name : value.name,
+                                                            price : value.price
+                                                        }
+
+                                                        context.increment(product)
+                                                    }}
+                                                >
                                                     <Image
                                                         style={style.changeIcon}
                                                         source={require('../../assets/plus.png')}
@@ -75,12 +95,9 @@ export const Cart = ({ navigation }) => {
                             </View>
                         ))
                     }
-                    {/*<Text> {context.store.total > 0 ? <Text> {context.store.total}</Text> : <Text/>}  </Text>*/}
+
                     <View
-                        style={{
-                            marginTop: 200,
-                            marginBottom : 50
-                        }}>
+                        style={style.bottomBtn}>
                         <Button
                             title = 'Thanh toán'
                             onPress = {() => {
