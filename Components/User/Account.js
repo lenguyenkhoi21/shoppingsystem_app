@@ -1,56 +1,146 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {Image, Text, View} from 'react-native'
-import axios from "axios";
-import {API_BASE} from "../../App.config";
-import {GlobalContext} from "../../AppState";
-import {useIsFocused} from "@react-navigation/native";
+import React, {useState} from 'react'
+import {
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native'
+import axios from 'axios'
+import {API_BASE} from '../../App.config'
+import {style} from './UserStyle'
+import {CommonActions} from '@react-navigation/native'
+import {srcProfile} from '../../Common'
 
-export const Account = () => {
-    const context = useContext(GlobalContext)
-    const isFocused = useIsFocused()
-    const [profile, setProfile] = useState({
-        name : null,
-        email : null,
-        avatar : null
+export const Account = ({route, navigation }) => {
+    const {phone, name, email, token} = route.params
+    const [update, setUpdate] = useState({
+        name : `${phone}`,
+        email : `${email}`
     })
-
-    //TODO: Fetch API Account - Method: GET - /api/profile/:phone
-    useEffect(() => {
-        if (isFocused) {
-            axios.get(`${API_BASE}/api/profile/${context.store.user.phone}`, {
-                headers: {
-                    Authorization : `Bearer ${context.store.user.token}`
-                }
-            })
-                .then(value => {
-                    if (value.data.message === 'Success') {
-
-                        setProfile({
-                            name : value.data.name,
-                            email : value.data.email,
-                            avatar : value.data.avatar
-                        })
-                    }
-                })
-                .catch(reason => {
-
-                })
-        }
-
-        return () => {
-
-        }
-    }, [isFocused])
+    const [error, setError] = useState(false)
+    const [emailError, setEmailError] = useState('Valid')
+    const [nameError, setNameError] = useState('Valid')
+    const [touchable, setTouchable] = useState(false)
+    const [notify, setNotify] = useState(false)
 
     //TODO: Template, POST API to update account - Method: PATCH (Payload Require) - /api/profile/
     return (
-        <View>
-            <Image
-                style = {{  width: 100, height: 100 }}
-                source={{ uri : profile.avatar }}
-            />
-            <Text> {profile.name} </Text>
-            <Text> {profile.email} </Text>
-        </View>
+        <SafeAreaView>
+            <ScrollView style={style.accountScrollview}>
+                <View>
+                    <Text style={style.accountText}>Số điện thoại:</Text>
+                    <Text style={style.accountTxtInput}>
+                        {phone}
+                    </Text>
+                </View>
+
+                <View>
+                    <Text style={style.accountText}>Họ và tên:</Text>
+                    <TextInput
+                        style={style.accountTxtInput}
+                        defaultValue={name}
+                        placeholder='Tên'
+                        onChangeText={(nameInput)=> {
+                            const regex = /^[^\s]+( [^\s]+)+$/
+                            if (nameInput.match(regex)){
+                                setUpdate({...update, name : nameInput})
+                                setNameError('Valid')
+                            } else {
+                                setNameError('InValid')
+                            }
+
+                            if (nameInput.length === 0) {
+                                setNameError('Empty')
+                            }
+
+                            if (nameError === 'Valid' &&
+                                emailError === 'Valid' &&
+                                nameInput.length > 0) {
+                                setTouchable(false)
+                            } else {
+                                setTouchable(true)
+                            }
+                        }}
+                    />
+                    {nameError === 'InValid' ? <Text style={style.errorText}>Tên không hợp lệ</Text> : null}
+                </View>
+
+                <View>
+                    <Text style={style.accountText}>Email:</Text>
+                    <TextInput
+                        style={style.accountTxtInput}
+                        defaultValue = {email}
+                        placeholder='Email'
+                        onChangeText={(emailInput) => {
+                            const regex = /^[^\s@]+@[^\s@]+$/
+                            if (emailInput.match(regex)){
+                                setUpdate({...update, email : emailInput})
+                                setEmailError('Valid')
+                            } else {
+                                setEmailError('InValid')
+                            }
+
+                            if (emailInput.length === 0) {
+                                setEmailError('Empty')
+                            }
+
+                            if (nameError === 'Valid' &&
+                                emailError === 'Valid' &&
+                                emailInput.length > 0) {
+                                setTouchable(false)
+                            } else {
+                                setTouchable(true)
+                            }
+                        }}
+                    />
+                    {emailError === 'InValid' ? <Text style={style.errorText}>Email không hợp lệ</Text> : null}
+                </View>
+
+                <TouchableOpacity
+                    style={style.accountBtn}
+                    disabled = {touchable}
+                    onPress= {() => {
+                        const payload = {
+                            phone : phone,
+                            name : update.name,
+                            email : update.email
+                        }
+
+                        axios.patch(`${API_BASE}/api/profile`, payload, {
+                            headers: {
+                                Authorization : `Bearer ${token}`
+                            }
+                        })
+                            .then(value => {
+                                if (value.data.message === 'Success') {
+                                    setNotify(true)
+                                    setTimeout(() => {
+                                        navigation.dispatch(
+                                            CommonActions.reset({
+                                                index : 1,
+                                                routes : [{name: `${srcProfile}`}]
+                                            })
+                                        )
+                                    }, 1000)
+                                } else {
+                                    setError(true)
+                                }
+                            })
+                            .catch(reason => {
+
+                            })
+                    }}
+                >
+                    <View style={style.accountBtnContent}>
+                        <Text style={style.updateBtnText}>Cập Nhập</Text>
+                    </View>
+                </TouchableOpacity>
+                {error ? <Text style={style.errorText}> Có lỗi xảy ra, vui lòng thử lại !</Text> : null}
+                {notify ? <Text style={style.errorText}> Cập nhật thông tin thành công !</Text> : null}
+            </ScrollView>
+        </SafeAreaView>
     )
 }
+

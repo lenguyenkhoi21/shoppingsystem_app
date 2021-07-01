@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import React, {useContext} from 'react'
 import {GlobalContext} from '../../AppState'
-import {srcProduct, srcSearch} from "../../Common";
+import {srcProduct, srcSearch} from '../../Common'
 import {style} from './HomeStyle'
 
 export const Shop = ({ navigation }) => {
@@ -24,11 +24,6 @@ export const Shop = ({ navigation }) => {
             <View style={style.viewItem} >
                 <TouchableOpacity
                     onPress={() => {
-                        // const draft = {
-                        //     price : item.price,
-                        //     name : item.name,
-                        //     product_id : item.product_id
-                        // }
                         navigation.navigate(`${srcProduct}`, {
                             item : item
                         })

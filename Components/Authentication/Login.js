@@ -1,5 +1,10 @@
 import React, {useContext, useState} from 'react'
-import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native'
 import {srcSignup} from '../../Common'
 import axios from 'axios'
 import {GlobalContext} from '../../AppState'

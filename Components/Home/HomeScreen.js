@@ -42,7 +42,6 @@ export const HomeScreen = ({navigation}) => {
                                     })
                                         .then(value => {
                                             if (value.data.message === 'Success') {
-                                                console.log('here')
                                                 navigation.navigate(`${tabFavorite}`)
                                             }
                                         })

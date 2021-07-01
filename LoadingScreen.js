@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Image, Text, View} from 'react-native'
+import {style} from "./AppStyle";
 
 export const LoadingScreen = () => {
     const [dot, setDot] = useState('.  ')
@@ -29,14 +30,24 @@ export const LoadingScreen = () => {
 
 
     return (
-        <View style={{justifyContent: 'center', alignItems: 'center', marginTop : 200}}>
-            <Image
-                source={require('./assets/logo.png')}
-                style={{ height : 230, width : 230 }}
-            />
-            <Text style={{ marginLeft : 10, fontWeight : '600' }}> Loading {dot} </Text>
-            <Text sytle={{fontWeight : '600'}}> Fast - Simple - Smart - Convention </Text>
-            <Text style={{ marginTop : 250, fontWeight : '600' }} > Copyright © 2021 all rights reserved By KISS Team </Text>
+        <View style={style.loadingContainer}>
+            <View style={style.loadingCenter}>
+                <Image
+                    source={require('./assets/logo.png')}
+                    style={style.loadingImage}
+                />
+
+                <View style={style.loadingCenter_2}>
+                    <Text style={style.loadingText}> Loading {dot} </Text>
+                    <Text style={style.loadingText}> Fast - Simple - Smart - Convention </Text>
+                </View>
+
+
+            </View>
+
+            <View style={style.loadingCenterBottom}>
+                <Text style={style.loadingText} > Copyright © 2021 all rights reserved By KISS Team </Text>
+            </View>
         </View>
     )
 }

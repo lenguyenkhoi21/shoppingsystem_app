@@ -1,8 +1,12 @@
 import React from 'react'
-import {Image, Text, View} from 'react-native'
+import {
+    Image,
+    Text,
+    View
+} from 'react-native'
 import { CommonActions } from '@react-navigation/native'
-import {srcCart} from "../../Common"
-import {style} from "./CartStyle"
+import {srcCart} from '../../Common'
+import {style} from './CartStyle'
 
 export const Success = ({ navigation }) => {
     setTimeout(() => {

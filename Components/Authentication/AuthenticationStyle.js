@@ -42,5 +42,16 @@ export const style = StyleSheet.create({
     txtColorBtn : {
         color : 'white',
         fontWeight : 'bold'
+    },
+    signupBtn2 : {
+        backgroundColor : '#FA4A0C',
+        borderRadius : 6,
+        padding : 3,
+        left : 0
+    },
+    errorText : {
+        marginBottom : 6,
+        color : '#eb4034',
+        width : 200
     }
 })

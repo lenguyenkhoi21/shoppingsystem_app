@@ -1,10 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Button, FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native'
-import axios from "axios"
-import {API_BASE} from "../../App.config"
-import {GlobalContext} from "../../AppState"
-import {useIsFocused} from "@react-navigation/native"
-import {style} from "./FavoriteStyle"
+import {
+    FlatList,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native'
+import axios from 'axios'
+import {API_BASE} from '../../App.config'
+import {GlobalContext} from '../../AppState'
+import {useIsFocused} from '@react-navigation/native'
+import {style} from './FavoriteStyle'
 
 export const Favorite = () => {
     const [favorite, setFavorite] = useState([])
@@ -109,10 +117,10 @@ export const Favorite = () => {
     return (
         <SafeAreaView style={style.safeView}>
             <ScrollView>
-                <View  style={{flex : 1}} >
-                    <View style={{flex : 1}} />
+                <View  style={style.favoriteFlex1} >
+                    <View style={style.favoriteFlex1} />
 
-                    <View style={{flex : 8}}>
+                    <View style={style.favoriteFlex8}>
                         <SafeAreaView>
                             <FlatList
                                 data={favorite}
@@ -121,7 +129,7 @@ export const Favorite = () => {
                         </SafeAreaView>
 
                     </View>
-                    <View style={{flex : 1}} />
+                    <View style={style.favoriteFlex1} />
                 </View>
             </ScrollView>
         </SafeAreaView>

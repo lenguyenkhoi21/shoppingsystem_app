@@ -1,8 +1,15 @@
 import React, {useContext} from 'react'
-import {Button, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import {
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native'
 import {srcPayment} from '../../Common'
 import {GlobalContext} from '../../AppState'
-import {style} from "./CartStyle"
+import {style} from './CartStyle'
 
 export const Cart = ({ navigation }) => {
     const context = useContext(GlobalContext)
@@ -129,8 +136,6 @@ export const Cart = ({ navigation }) => {
                             >
                                 <Text style={style.orderButtonText}> Thanh toán </Text>
                             </TouchableOpacity>
-
-
                         </View>
                     </View>
                 </View>

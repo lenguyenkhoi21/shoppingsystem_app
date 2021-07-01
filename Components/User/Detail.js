@@ -1,21 +1,29 @@
 import React from 'react'
-import {SafeAreaView, View, ScrollView} from 'react-native'
-import {Row, Rows, Table, TableWrapper} from "react-native-table-component"
-import {style} from "./UserStyle"
-
+import {
+    SafeAreaView,
+    View,
+    ScrollView
+} from 'react-native'
+import {
+    Row,
+    Rows,
+    Table,
+    TableWrapper
+} from 'react-native-table-component'
+import {style} from './UserStyle'
 
 export const Detail = ({route}) => {
     const { detail, total } = route.params
-
     const header = ['Tên Sản Phẩm', 'Số Lượng', 'Thành Tiền']
 
     //TODO: Styling here, This is only show
     return (
-        <View  style={{flex : 1}} >
-            <View style={{flex : 1}} />
-                <View style={{flex : 8}}>
-                    <SafeAreaView>
-                        <ScrollView>
+        <SafeAreaView>
+            <ScrollView>
+                <View  style={style.detailFlex1} >
+                    <View style={style.detailFlex1} />
+                        <View style={style.detailFlex8}>
+
                             <Table style={style.container}>
                                 <Row
                                     data={header}
@@ -39,10 +47,10 @@ export const Detail = ({route}) => {
                                     textStyle={style.textTotal}
                                 />
                             </Table>
-                        </ScrollView>
-                    </SafeAreaView>
+                        </View>
+                    <View style={style.detailFlex1} />
                 </View>
-            <View style={{flex : 1}} />
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }

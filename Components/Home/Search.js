@@ -1,4 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {
+    useEffect,
+    useRef,
+    useState
+} from 'react'
 import {
     FlatList,
     Image,
@@ -10,10 +14,11 @@ import {
     View
 }
 from 'react-native'
-import {srcProduct} from "../../Common";
+import {srcProduct, srcShop} from '../../Common'
 import {style} from './HomeStyle'
 import axios from 'axios'
-import {API_BASE, NEXT_API} from '../../App.config'
+import {API_BASE} from '../../App.config'
+import {CommonActions, useIsFocused} from '@react-navigation/native'
 
 const usePrevious = (value) => {
     const ref = useRef(value)
@@ -29,16 +34,25 @@ const usePrevious = (value) => {
 export const Search = ({ navigation }) => {
     const [text, setText] = useState('')
     const [data, setData] = useState([])
-
     const prevText = usePrevious(text)
+    const isFocused = useIsFocused()
+
+    useEffect(()=> {
+        if (!isFocused) {
+            setTimeout(() => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index : 1,
+                        routes : [{name: `${srcShop}`}]
+                    })
+                )
+            }, 1000)
+        }
+    }, [isFocused])
 
     useEffect(() => {
-        //axios.get(`${API_BASE}/api/search/${text}`)
-        console.log('Previous State ' + prevText.length)
-        console.log('Current State ' + text.length)
         if (Math.abs(prevText.length - text.length) > 3 || prevText.length === text.length) {
             axios.get(`${API_BASE}/api/search/${text}`)
-            //axios.get(`${NEXT_API}/react-native`)
                 .then(value => {
                     if (value.data.message==='Success') {
                         setData(value.data.products)

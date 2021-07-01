@@ -1,4 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {
+    useContext,
+    useEffect,
+    useState
+} from 'react'
 import {
     SafeAreaView,
     ScrollView,
@@ -7,10 +11,10 @@ import {
     View
 } from 'react-native'
 import {srcDetail} from '../../Common'
-import axios from "axios";
-import {API_BASE} from "../../App.config"
-import {GlobalContext} from "../../AppState"
-import {useIsFocused} from "@react-navigation/native"
+import axios from 'axios'
+import {API_BASE} from '../../App.config'
+import {GlobalContext} from '../../AppState'
+import {useIsFocused} from '@react-navigation/native'
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component'
 import {style} from './UserStyle'
 
@@ -80,12 +84,12 @@ export const History = ({ navigation }) => {
 
     //TODO: Styling here, passing prop to Detail
     return (
-        <View  style={style.viewChildren1} >
-            <View style={style.viewChildren1} />
+        <SafeAreaView>
+            <ScrollView>
+                <View  style={style.viewChildren1} >
+                    <View style={style.viewChildren1} />
 
-            <View style={style.viewChildren8}>
-                <SafeAreaView>
-                    <ScrollView>
+                    <View style={style.viewChildren8}>
                         <Table style={style.container}>
                             <Row
                                 data={header}
@@ -102,12 +106,10 @@ export const History = ({ navigation }) => {
                                 />
                             </TableWrapper>
                         </Table>
-                    </ScrollView>
-                </SafeAreaView>
-
-            </View>
-
-            <View style={style.viewChildren1} />
-        </View>
+                    </View>
+                    <View style={style.viewChildren1} />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }

@@ -1,7 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {
+    useContext,
+    useEffect,
+    useState
+} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {HomeScreen} from './Components/Home/HomeScreen'
-import {Image, ImageBackground, Text, View} from 'react-native'
+import {
+    Image,
+    ImageBackground,
+    Text,
+    View
+} from 'react-native'
 import {FavoriteScreen} from './Components/Favorite/FavoriteScreen'
 import {CartScreen} from './Components/Cart/CartScreen'
 import {UserScreen} from './Components/User/UserScreen'
@@ -12,8 +21,8 @@ import {
     tabCart,
     tabFavorite,
     tabHome,
-    tabUser}
-from './Common'
+    tabUser
+} from './Common'
 import {AppState, GlobalContext} from './AppState'
 import {API_BASE} from "./App.config";
 import axios from "axios";
@@ -134,7 +143,6 @@ const MainScreen = () => {
                 name={tabCart}
                 options={{
                     tabBarIcon: ({focused}) => (
-                        // style={{position: 'absolute', justifyContent: 'center', alignItems: 'center'}}
                         <View style={[style.tabScreen, style.tabCartStyle]}>
                             {
                                 context.store.totalItem > 0 ?

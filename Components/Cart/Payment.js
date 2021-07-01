@@ -1,11 +1,27 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {Button, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import React, {
+    useContext,
+    useEffect,
+    useState
+} from 'react'
+import {
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native'
 import {srcSuccess} from '../../Common'
-import {GlobalContext} from "../../AppState"
-import axios from "axios"
-import {API_BASE} from "../../App.config"
-import {Row, Rows, Table, TableWrapper} from "react-native-table-component"
-import {style} from "./CartStyle"
+import {GlobalContext} from '../../AppState'
+import axios from 'axios'
+import {API_BASE} from '../../App.config'
+import {
+    Row,
+    Rows,
+    Table,
+    TableWrapper
+} from 'react-native-table-component'
+import {style} from './CartStyle'
 
 export const Payment = ({ navigation }) => {
     const context = useContext(GlobalContext)
@@ -117,6 +133,7 @@ export const Payment = ({ navigation }) => {
                     </Table>
 
                     <Text> {text} </Text>
+
                 </ScrollView>
             </SafeAreaView>
         </View>

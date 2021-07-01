@@ -46,5 +46,12 @@ export const style = StyleSheet.create({
     },
     sadFacePosition : {
         marginTop: 70
+    },
+    favoriteFlex1 : {
+        flex : 1
+    },
+    favoriteFlex8 : {
+        flex : 8
     }
+
 })

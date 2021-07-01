@@ -29,6 +29,31 @@ export const style = StyleSheet.create({
         width : 12,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    loadingContainer : {
+        backgroundColor : '#FFFFFF',
+        height: '100%'
+    },
+    loadingCenter : {
+        position : 'absolute',
+        top : 100,
+        alignSelf: 'center'
+    },
+    loadingImage : {
+        height : 230,
+        width : 230
+    },
+    loadingCenter_2 : {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loadingCenterBottom : {
+        position : 'absolute',
+        bottom : 15,
+        alignSelf: 'center'
+    },
+    loadingText : {
+        fontWeight : 'bold'
     }
 })
 
