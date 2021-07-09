@@ -27,10 +27,13 @@ import {AppState, GlobalContext} from './AppState'
 import {API_BASE} from "./App.config";
 import axios from "axios";
 import {LoadingScreen} from './LoadingScreen'
+import { LogBox } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 
 const MainScreen = () => {
+    LogBox.ignoreLogs(['Warning: ...'])
+    LogBox.ignoreAllLogs()
     const context = useContext(GlobalContext)
     const [loading, setLoading] = useState(true)
 

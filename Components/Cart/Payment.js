@@ -71,7 +71,7 @@ export const Payment = ({ navigation }) => {
                     total : context.store.total
                 }
 
-                axios.post(`${API_BASE}/api/payment`,payload, {
+                axios.post(`${API_BASE}/api/payment`, payload, {
                     headers: {
                         Authorization : `Bearer ${context.store.user.token}`
                     }
