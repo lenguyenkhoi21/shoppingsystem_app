@@ -1,15 +1,34 @@
-import React, {useReducer} from 'react'
-import {createContext} from 'react'
-import {Reducer} from './Reducer'
+import React, {
+    useReducer,
+    createContext,
+    useCallback
+} from 'react'
 import {
-    typeAddToCart, typeCancel,
+    typeAddToCart,
+    typeClear,
     typeChangeNumber,
     typeFetch,
     typeLogin,
+    typeLoginAfterSignup,
     typeLogout,
     typeRemoveFromCart,
-    typeSearch
+    typePayment,
+    typeIncrement,
+    typeDecrement
 } from './Common'
+import {
+    addReducer,
+    changeReducer,
+    clearReducer,
+    decrementReducer,
+    fetchDataReducer,
+    incrementReducer,
+    loginAfterSignupReducer,
+    loginReducer,
+    logoutReducer,
+    paymentReducer,
+    removeReducer
+} from './Reducer'
 
 export const GlobalContext = createContext()
 
@@ -19,17 +38,66 @@ export const AppState = (props) => {
         cart : [],
         total : 0,
         totalItem : 0,
-        search : [],
         user : {
             phone : null,
             token : null
         }
     }
 
-    const [store, dispatch] = useReducer(Reducer, initialState)
+    const [store, dispatch] = useReducer(
+        useCallback(
+        (state, action) => {
+            switch (action.type) {
+                case `${typeAddToCart}`:
+                    return addReducer(action.product, state)
 
-    const cancel = () => {
-        dispatch({ type : `${typeCancel}` })
+                case `${typeRemoveFromCart}`:
+                    return removeReducer(action.product, state)
+
+                case `${typeChangeNumber}`:
+                    return changeReducer(action.product, action.count, state)
+
+                case `${typeLogin}`:
+                    return loginReducer(action.account, state)
+
+                case `${typeLogout}`:
+                    return logoutReducer(action.navigate, state)
+
+                case `${typeFetch}`:
+                    return fetchDataReducer(action.data, state)
+
+                case `${typeClear}`:
+                    return clearReducer(state)
+
+                case `${typeLoginAfterSignup}`:
+                    return loginAfterSignupReducer(action.account, action.navigate, state)
+
+                case `${typePayment}`:
+                    return paymentReducer(action.navigate, state)
+
+                case `${typeIncrement}`:
+                    return incrementReducer(action.product, state)
+
+                case `${typeDecrement}`:
+                    return decrementReducer(action.product, state)
+
+                default:
+                    return state
+            }
+        }, [])
+        , initialState
+    )
+
+    const increment = (product) => {
+        dispatch({type : `${typeIncrement}`,  product : product})
+    }
+
+    const decrement = (product) => {
+        dispatch({type : `${typeDecrement}`,  product : product})
+    }
+
+    const clear = () => {
+        dispatch({ type : `${typeClear}` })
     }
 
     const addToCart = (product) => {
@@ -44,10 +112,6 @@ export const AppState = (props) => {
         dispatch({ type : `${typeChangeNumber}`, product : product, count : count })
     }
 
-    const searchProduct = (name) => {
-        dispatch({ type : `${typeSearch}`, name : name })
-    }
-
     const fetchData = (data) => {
         dispatch({ type : `${typeFetch}`, data : data })
     }
@@ -60,6 +124,14 @@ export const AppState = (props) => {
         dispatch({ type : `${typeLogout}`, navigate : navigate })
     }
 
+    const loginAfterSignup = (account, navigate) => {
+        dispatch({ type : `${typeLoginAfterSignup}`, account : account , navigate : navigate })
+    }
+
+    const payment = (navigate) => {
+        dispatch({ type : `${typePayment}`, navigate : navigate })
+    }
+
     return (
         <GlobalContext.Provider
             value={{
@@ -67,11 +139,14 @@ export const AppState = (props) => {
                 addToCart,
                 removeFromCart,
                 changeNumber,
-                searchProduct,
                 fetchData,
                 login,
                 logout,
-                cancel
+                clear,
+                loginAfterSignup,
+                payment,
+                increment,
+                decrement
             }}
         >
             {props.children}

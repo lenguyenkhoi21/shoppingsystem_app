@@ -1,28 +1,97 @@
-import React, {useContext, useState} from 'react'
-import {FlatList, Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native'
-import {GlobalContext} from '../../AppState'
+import React, {
+    useEffect,
+    useRef,
+    useState
+} from 'react'
+import {
+    FlatList,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+}
+from 'react-native'
+import {srcProduct, srcShop} from '../../Common'
+import {style} from './HomeStyle'
+import axios from 'axios'
+import {API_BASE} from '../../App.config'
+import {CommonActions, useIsFocused} from '@react-navigation/native'
+
+const usePrevious = (value) => {
+    const ref = useRef(value)
+    useEffect(() => {
+        setTimeout(()=> {
+            ref.current = value
+        }, 1200)
+
+    })
+    return ref.current
+}
 
 export const Search = ({ navigation }) => {
-    const context = useContext(GlobalContext)
+    const [text, setText] = useState('')
+    const [data, setData] = useState([])
+    const prevText = usePrevious(text)
+    const isFocused = useIsFocused()
+
+    useEffect(()=> {
+        if (!isFocused) {
+            setTimeout(() => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index : 1,
+                        routes : [{name: `${srcShop}`}]
+                    })
+                )
+            }, 1000)
+        }
+    }, [isFocused])
+
+    useEffect(() => {
+        if (Math.abs(prevText.length - text.length) > 3 || prevText.length === text.length) {
+            axios.get(`${API_BASE}/api/search/${text}`)
+                .then(value => {
+                    if (value.data.message==='Success') {
+                        setData(value.data.products)
+                    }
+                })
+                .catch(reason => {
+
+                })
+        }
+
+        return () => {
+        }
+    }, [text])
+
 
     const Item = ( {item}) => {
         return (
-            <View>
+            <View style={style.viewItem} >
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('Sản phẩm', {
+                        // const draft = {
+                        //     price : item.price,
+                        //     name : item.name,
+                        //     product_id : item.product_id
+                        // }
+                        navigation.navigate(`${srcProduct}`, {
                             item : item
                         })
                     }}
+                    key={item.product_id}
+                    style={style.center}
                 >
-                    <Text>  {item.name}  </Text>
                     <Image
-                        style={{ height : 200, width : 200 }}
+                        style={style.imageProduct}
                         source={{
                             uri: `${item.image}`
                         }}
                     />
-                    <Text> {item.price} </Text>
+                    <Text style={style.textProduct} > {item.name} </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -30,30 +99,27 @@ export const Search = ({ navigation }) => {
 
     //TODO: Styling here
     return (
-        <View style={{flex : 1}}>
-            <View style={{flex : 1}}>
+        <View style={style.viewChildren1}>
+            <View style={style.viewChildren1}>
                 <TextInput
-                    style={{height: 40, borderWidth: 1, width : 200, marginLeft :130, marginTop : 10}}
+                    style={style.textSearch}
                     placeholder='Tìm kiếm ...'
-                    onChangeText = {(text) => {
-                        setTimeout(() => {
-                            context.searchProduct(text)
-                        }, 1000)
+                    onChangeText = {(textInput) => {
+                        setText(textInput)
                     }}
                 />
             </View>
-            <View style={{flex : 9}}>
+            <View style={style.viewChildren9}>
                 <SafeAreaView>
                     <ScrollView>
                         <FlatList
-                            data={context.store.search}
+                            data={data}
                             renderItem={Item}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.product_id}
+                            contentContainerStyle={style.center}
                         />
                     </ScrollView>
                 </SafeAreaView>
-
-
             </View>
         </View>
     )

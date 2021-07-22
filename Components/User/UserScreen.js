@@ -4,7 +4,13 @@ import {Profile} from './Profile'
 import {Account} from './Account'
 import {Setting} from './Setting'
 import {History} from './History'
-import {srcAccount, srcDetail, srcHistory, srcProfile, srcSetting} from '../../Common'
+import {
+    srcAccount,
+    srcDetail,
+    srcHistory,
+    srcProfile,
+    srcSetting}
+from '../../Common'
 import {Detail} from './Detail'
 
 

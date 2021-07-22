@@ -25,11 +25,14 @@ export const srcDetail = 'Chi tiết đơn hàng'
 export const typeAddToCart = 'ADD_TO_CART'
 export const typeRemoveFromCart = 'REMOVE_FROM_CART'
 export const typeChangeNumber = 'CHANGE_NUMBER'
-export const typeSearch = 'SEARCH'
 export const typeLogin = 'LOGIN'
 export const typeLogout = 'LOGOUT'
 export const typeFetch = 'FETCH'
-export const typeCancel = 'CANCEL'
+export const typeClear = 'CANCEL'
+export const typePayment = 'PAYMENT'
+export const typeLoginAfterSignup = 'LOGIN_AFTER_SIGNUP'
+export const typeDecrement = 'DECREMENT'
+export const typeIncrement = 'INCREMENT'
 
 
 

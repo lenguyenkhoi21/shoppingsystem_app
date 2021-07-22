@@ -1,57 +1,78 @@
-import React, {useContext, useEffect} from 'react'
+import React, {
+    useContext,
+    useEffect,
+    useState
+} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {HomeScreen} from './Components/Home/HomeScreen'
-import {Image, Text, View} from 'react-native'
+import {
+    Image,
+    ImageBackground,
+    Text,
+    View
+} from 'react-native'
 import {FavoriteScreen} from './Components/Favorite/FavoriteScreen'
 import {CartScreen} from './Components/Cart/CartScreen'
 import {UserScreen} from './Components/User/UserScreen'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {AuthenticationScreen} from './Components/Authentication/AuthenticationScreen'
 import {style} from './AppStyle'
-import {tabCart, tabFavorite, tabHome, tabUser} from './Common'
+import {
+    tabCart,
+    tabFavorite,
+    tabHome,
+    tabUser
+} from './Common'
 import {AppState, GlobalContext} from './AppState'
-import {image1, image2, image3, image4} from './DummyData'
+import {API_BASE} from "./App.config";
+import axios from "axios";
+import {LoadingScreen} from './LoadingScreen'
+import { LogBox } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 
 const MainScreen = () => {
+    LogBox.ignoreLogs(['Warning: ...'])
+    LogBox.ignoreAllLogs()
     const context = useContext(GlobalContext)
+    const [loading, setLoading] = useState(true)
 
-    //TODO Fetch API From Here
+    //TODO Fetch API From Here - Method GET - /api/fetch
     useEffect(() => {
-        context.fetchData([
-            {
-                id: '1',
-                name: 'Trà sữa chân châu',
-                price: 19000,
-                image: `${image1}`
-            },
-            {
-                id: '2',
-                name: 'Trà sữa truyền thống',
-                price: 29000,
-                image: `${image2}`
-            },
-            {
-                id: '3',
-                name: 'Trà đào',
-                price: 26000,
-                image: `${image3}`
-            },
-            {
-                id: '4',
-                name: 'Nước cam',
-                price: 29000,
-                image: `${image4}`
-            }
-        ])
 
+        axios.get(`${API_BASE}/api/fetch`)
+            .then(value => {
+                context.fetchData(value.data.products)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 2000)
+
+            })
+            .catch(reason => {
+
+            })
         return () => {
 
         }
+
+
+
     }, [])
 
+    if (loading) {
+        return (
+            <Tab.Navigator>
+                <Tab.Screen
+                    name='Loading Screen'
+                    options={{tabBarVisible : false}}
+                    component={LoadingScreen}
+                >
+                </Tab.Screen>
+            </Tab.Navigator>
+        )
+    }
 
+    //TODO: Styling here if need
     return (
         <Tab.Navigator
             initialRouteName={tabHome}
@@ -65,7 +86,15 @@ const MainScreen = () => {
                 component={HomeScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
-                        <View>
+                        <View style={style.tabScreen}>
+                            <View>
+                                <ImageBackground
+                                    style={style.backgroundCart}
+                                >
+                                    <Text style={ style.textCart }>  </Text>
+                                </ImageBackground>
+                            </View>
+
                             <Image
                                 source={require('./assets/home.png')}
                                 style={{
@@ -74,6 +103,9 @@ const MainScreen = () => {
                                     tintColor: focused ? '#FA4A0C' : '#000000'
                                 }}
                             />
+                            {
+
+                            }
                         </View>
                     )
                 }}
@@ -84,9 +116,16 @@ const MainScreen = () => {
                 name={tabFavorite}
                 options={{
                     tabBarIcon: ({focused}) => (
-                        <View>
+                        <View style={style.tabScreen}>
+                            <View>
+                                <ImageBackground
+                                    style={style.backgroundCart}
+                                >
+                                    <Text style={ style.textCart }>  </Text>
+                                </ImageBackground>
+                            </View>
                             <Image
-                                source={require('./assets/heart.png')}
+                                source={require('./assets/star.png')}
                                 style={{
                                     height: 25,
                                     width: 25,
@@ -107,18 +146,35 @@ const MainScreen = () => {
                 name={tabCart}
                 options={{
                     tabBarIcon: ({focused}) => (
-                        <View>
+                        <View style={[style.tabScreen, style.tabCartStyle]}>
+                            {
+                                context.store.totalItem > 0 ?
+                                    <View style={style.viewCart} >
+                                        <ImageBackground
+                                            style={style.backgroundCart}
+                                            source = {require('./assets/circle_red.png')}
+                                        >
+                                            <Text style={ style.textCart }> {context.store.totalItem} </Text>
+                                        </ImageBackground>
+                                    </View>
+                                    :
+                                    <View>
+                                        <ImageBackground
+                                            style={style.backgroundCart}
+                                        >
+                                            <Text style={ style.textCart }>  </Text>
+                                        </ImageBackground>
+                                    </View>
+                            }
                             <Image
                                 source={require('./assets/cart.png')}
                                 style={{
+                                    position : 'relative',
                                     height: 25,
                                     width: 25,
                                     tintColor: focused ? '#FA4A0C' : '#000000'
                                 }}
                             />
-                            {
-                                context.store.totalItem > 0 ? <Text > {context.store.totalItem} </Text> : <Text> </Text>
-                            }
                         </View>
                     )
                 }}
@@ -133,7 +189,14 @@ const MainScreen = () => {
                 name={tabUser}
                 options={{
                     tabBarIcon: ({focused}) => (
-                        <View>
+                        <View style={style.tabScreen} >
+                            <View>
+                                <ImageBackground
+                                    style={style.backgroundCart}
+                                >
+                                    <Text style={ style.textCart}>  </Text>
+                                </ImageBackground>
+                            </View>
                             <Image
                                 source={require('./assets/user.png')}
                                 style={{
