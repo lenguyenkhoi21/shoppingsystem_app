@@ -1,5 +1,8 @@
-import React, {useReducer, createContext} from 'react'
-import {Reducer} from './Reducer'
+import React, {
+    useReducer,
+    createContext,
+    useCallback
+} from 'react'
 import {
     typeAddToCart,
     typeClear,
@@ -13,6 +16,19 @@ import {
     typeIncrement,
     typeDecrement
 } from './Common'
+import {
+    addReducer,
+    changeReducer,
+    clearReducer,
+    decrementReducer,
+    fetchDataReducer,
+    incrementReducer,
+    loginAfterSignupReducer,
+    loginReducer,
+    logoutReducer,
+    paymentReducer,
+    removeReducer
+} from './Reducer'
 
 export const GlobalContext = createContext()
 
@@ -28,7 +44,49 @@ export const AppState = (props) => {
         }
     }
 
-    const [store, dispatch] = useReducer(Reducer, initialState)
+    const [store, dispatch] = useReducer(
+        useCallback(
+        (state, action) => {
+            switch (action.type) {
+                case `${typeAddToCart}`:
+                    return addReducer(action.product, state)
+
+                case `${typeRemoveFromCart}`:
+                    return removeReducer(action.product, state)
+
+                case `${typeChangeNumber}`:
+                    return changeReducer(action.product, action.count, state)
+
+                case `${typeLogin}`:
+                    return loginReducer(action.account, state)
+
+                case `${typeLogout}`:
+                    return logoutReducer(action.navigate, state)
+
+                case `${typeFetch}`:
+                    return fetchDataReducer(action.data, state)
+
+                case `${typeClear}`:
+                    return clearReducer(state)
+
+                case `${typeLoginAfterSignup}`:
+                    return loginAfterSignupReducer(action.account, action.navigate, state)
+
+                case `${typePayment}`:
+                    return paymentReducer(action.navigate, state)
+
+                case `${typeIncrement}`:
+                    return incrementReducer(action.product, state)
+
+                case `${typeDecrement}`:
+                    return decrementReducer(action.product, state)
+
+                default:
+                    return state
+            }
+        }, [])
+        , initialState
+    )
 
     const increment = (product) => {
         dispatch({type : `${typeIncrement}`,  product : product})

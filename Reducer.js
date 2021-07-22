@@ -1,18 +1,4 @@
-import {
-    typeAddToCart,
-    typeClear,
-    typeChangeNumber,
-    typeFetch,
-    typeLogin,
-    typeLoginAfterSignup,
-    typeLogout,
-    typeRemoveFromCart,
-    typePayment,
-    typeIncrement,
-    typeDecrement
-} from './Common'
-
-const increment = (product, state) => {
+export const incrementReducer = (product, state) => {
     const array = state.cart
     const exist = array.find(item => {
         return product.product_id === item.product_id
@@ -30,7 +16,7 @@ const increment = (product, state) => {
 
 }
 
-const decrement = (product, state) => {
+export const decrementReducer = (product, state) => {
     const array = state.cart
     const exist = array.find(item => {
         return product.product_id === item.product_id
@@ -55,7 +41,7 @@ const decrement = (product, state) => {
     return {...state, cart : array, total : total, totalItem : totalItem}
 }
 
-const add = (product, state) => {
+export const addReducer = (product, state) => {
     const array = state.cart
     const exist = array.find(item => {
         return product.product_id === item.product_id
@@ -82,83 +68,44 @@ const add = (product, state) => {
     }
 }
 
-const clear = (state) => {
+export const clearReducer = (state) => {
     return {...state, total : 0, cart: [], totalItem : 0}
 }
 
-const remove = (product, state) => {
+export const removeReducer = (product, state) => {
     const total = state.total - (product.price * product.count)
     const totalItem = state.totalItem - product.count
     const array = state.cart.filter(value => value.product_id !== product.product_id)
     return {...state, cart : array, total : total, totalItem : totalItem}
 }
 
-const change = (product, number, state) => {
+export const changeReducer = (product, number, state) => {
 
 }
 
-const login = (account, state) => {
+export const loginReducer = (account, state) => {
     return {...state, user : {phone : account.phone, token : account.token}}
 }
 
-const logout = (navigate, state) => {
+export const logoutReducer = (navigate, state) => {
     navigate()
     return {...state, user : { phone : null, password : null }}
 }
 
-const fetchData = (data, state) => {
+export const fetchDataReducer = (data, state) => {
     return {...state, products: data}
 }
 
-const loginAfterSignup = (account, navigate, state) => {
+export const loginAfterSignupReducer = (account, navigate, state) => {
     navigate()
     return {...state, user : {phone : account.phone, token : account.token}}
 }
 
-const payment = (navigate, state) => {
+export const paymentReducer = (navigate, state) => {
     navigate()
     return {...state, cart : [], total : 0, totalItem: 0}
 }
 
-export const Reducer = (state, action) => {
 
-    switch (action.type) {
-        case `${typeAddToCart}`:
-            return add(action.product, state)
-
-        case `${typeRemoveFromCart}`:
-            return remove(action.product, state)
-
-        case `${typeChangeNumber}`:
-            return change(action.product, action.count, state)
-
-        case `${typeLogin}`:
-            return login(action.account, state)
-
-        case `${typeLogout}`:
-            return logout(action.navigate, state)
-
-        case `${typeFetch}`:
-            return fetchData(action.data, state)
-
-        case `${typeClear}`:
-            return clear(state)
-
-        case `${typeLoginAfterSignup}`:
-            return loginAfterSignup(action.account, action.navigate, state)
-
-        case `${typePayment}`:
-            return payment(action.navigate, state)
-
-        case `${typeIncrement}`:
-            return increment(action.product, state)
-
-        case `${typeDecrement}`:
-            return decrement(action.product, state)
-
-        default:
-            return state
-    }
-}
 
 
